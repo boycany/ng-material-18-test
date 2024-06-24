@@ -1,1 +1,101 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+//m2 的自定義方式
+// $my-base-palette: (
+//   50: #efe6ff,
+//   100: #d5c1fd,
+//   200: #b897fe,
+//   300: #986aff,
+//   400: #7c45fe,
+//   500: #5b16fc,
+//   600: #4b10f6,
+//   700: #3002ee,
+//   800: #0000e9,
+//   900: #0000e5,
+
+//   contrast: (
+//     50: rgba(black, 0.87),
+//     100: rgba(black, 0.87),
+//     200: rgba(black, 0.87),
+//     300: white,
+//     400: white,
+//     500: white,
+//     600: white,
+//     700: white,
+//     800: white,
+//     900: white,
+//   ),
+// );
+
+// m2 的方式，也可以傳入參數，自定義 default, lighter, darker 的明度 level
+// $material-primary: mat.m2-define-palette($my-base-palette);
+// $material-accent: mat.m2-define-palette(mat.$red-palette, A200, A100, A400);
+// $material-warn: mat.m2-define-palette(mat.$red-palette);
+
+// Define the theme object.
+$material-18-custom-theme-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$spring-green-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: (
+      plain-family: "Roboto",
+      brand-family: "Roboto",
+      bold-weight: 700,
+      medium-weight: 500,
+      regular-weight: 400,
+    ),
+    density: (
+      scale: 0,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+:root {
+  @include mat.all-component-themes($material-18-custom-theme-theme);
+}
+
+// Comment out the line below if you want to use the pre-defined typography utility classes.
+// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// @include mat.typography-hierarchy($material-18-custom-theme-theme);
+
+// Comment out the line below if you want to use the deprecated `color` inputs.
+// @include mat.color-variants-backwards-compatibility($material-18-custom-theme-theme);
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html {
+  .mat-mdc-raised-button.mat-tertiary {
+    @include mat.button-color(
+      $material-18-custom-theme-theme,
+      $color-variant: tertiary
+    );
+  }
+  .mat-mdc-raised-button.mat-error {
+    @include mat.button-color(
+      $material-18-custom-theme-theme,
+      $color-variant: error
+    );
+  }
+}
